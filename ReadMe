@@ -1,0 +1,36 @@
+This is a web server provided by SoftUni so the students can deploy a web app on it. 
+What you see here is an app build upon the custom server that is used as a solution to the presented problem.
+
+The problem:
+
+SMS (SuperMarket System) is an online supermarket for shopping. You have been tasked to implement a platform in
+which the users can add products to their cart and buy them.
+
+The Database of SMS needs to support 3 entities:
+  User,Product,Cart
+
+Page requirements
+-Index Page
+-User Login/Logout
+-Home Page
+-Create Product
+-Cart Details
+
+Functionality
+The functionality of SMS Platform is very simple.
+Guests can Register, Login and view the Index Page.
+Users can Create Products and see All Products on the Home Page. From the Home Page they can also Add
+Products and view Details about their Cart and buy all Products.
+Products can be Created by Users. All created Products are visualized on the Home Page.
+Products are visualized on the Home Page as a table with Name of the Product, Price and action Add to
+
+Cart
+Products added are stored in the User's Cart. In Cart Details Page, User can buy the products.
+When User decides to buy the products in his cart, the Cart becomes empty (products are deleted).
+Redirections
+ Upon successful Registration of a User, you should be redirected to the Login Page.
+ Upon successful Login of a User, you should be redirected to the Home Page.
+ Upon successful Creation of a Product, you should be redirected to the Home Page.
+ Upon successful Adding to Cart, you should be redirected to the Cart Details Page.
+ Upon successful Buying, you should be redirected to the Home Page.
+ Upon successful Logout of a User, you should be redirected to the Index Page.
