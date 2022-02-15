@@ -11,11 +11,6 @@ namespace SMS.Data.Models
         [StringLength(36)]
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        [Required]
-        [StringLength(36)]
-        public string UserId { get; set; }
-
-        [ForeignKey(nameof(UserId))]
         public User User { get; set; }
 
         public ICollection<Product> Products { get; set; } = new List<Product>();
