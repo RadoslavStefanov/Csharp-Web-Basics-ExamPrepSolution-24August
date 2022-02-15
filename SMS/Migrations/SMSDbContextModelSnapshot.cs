@@ -27,14 +27,7 @@ namespace SMS.Migrations
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Carts");
                 });
@@ -92,20 +85,10 @@ namespace SMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId");
+                    b.HasIndex("CartId")
+                        .IsUnique();
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("SMS.Data.Models.Cart", b =>
-                {
-                    b.HasOne("SMS.Data.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SMS.Data.Models.Product", b =>
@@ -120,8 +103,8 @@ namespace SMS.Migrations
             modelBuilder.Entity("SMS.Data.Models.User", b =>
                 {
                     b.HasOne("SMS.Data.Models.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId")
+                        .WithOne("User")
+                        .HasForeignKey("SMS.Data.Models.User", "CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -131,6 +114,8 @@ namespace SMS.Migrations
             modelBuilder.Entity("SMS.Data.Models.Cart", b =>
                 {
                     b.Navigation("Products");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

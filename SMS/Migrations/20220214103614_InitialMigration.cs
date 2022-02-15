@@ -12,8 +12,7 @@ namespace SMS.Migrations
                 name: "Carts",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,11 +60,6 @@ namespace SMS.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carts_UserId",
-                table: "Carts",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Products_CartId",
                 table: "Products",
                 column: "CartId");
@@ -73,23 +67,12 @@ namespace SMS.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Users_CartId",
                 table: "Users",
-                column: "CartId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Carts_Users_UserId",
-                table: "Carts",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "CartId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Carts_Users_UserId",
-                table: "Carts");
-
             migrationBuilder.DropTable(
                 name: "Products");
 
