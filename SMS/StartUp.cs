@@ -2,6 +2,8 @@
 {
     using BasicWebServer.Server;
     using BasicWebServer.Server.Routing;
+    using SMS.Contracts;
+    using SMS.Sevices;
     using System.Threading.Tasks;
 
     public class StartUp
@@ -12,8 +14,8 @@
                .MapControllers()
                .MapStaticFiles());
 
-            //server.ServiceCollection
-            //    .Add<IUserService, UserService>();
+            server.ServiceCollection
+                .Add<IUserService, UserService>();
 
             await server.Start();
         }
