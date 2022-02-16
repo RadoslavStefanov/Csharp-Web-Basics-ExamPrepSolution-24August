@@ -15,7 +15,7 @@ namespace SMS.Controllers
     {
         private readonly IUserService userService;
 
-        public UsersController(Request request,IUserService _userService) : base(request)
+        public UsersController(Request request, IUserService _userService) : base(request)
         { userService = _userService; }
 
         public Response Login()
@@ -37,7 +37,7 @@ namespace SMS.Controllers
             if (id == null)
             {
                 return View(new { ErrorMessage = "Incorrect login!" }, "/Error");
-            } 
+            }
 
             SignIn(id);
 
@@ -61,7 +61,7 @@ namespace SMS.Controllers
         [HttpPost]
         public Response Register(RegisterViewModel model)
         {
-            var (isRegistered,error) = userService.Register(model);
+            var (isRegistered, error) = userService.Register(model);
 
             if (isRegistered)
             {
@@ -69,6 +69,12 @@ namespace SMS.Controllers
             }
 
             return View(new { ErrorMessage = error }, "/Error");
+        }
+
+        public Response Logout()
+        {
+            SignOut();
+            return Redirect("/");
         }
     }
 }
