@@ -20,7 +20,8 @@
                 .Add<IUserService, UserService>()
                 .Add<SMSDbContext>()
                 .Add<IRepository, Repository>()
-                .Add<IProductService, ProductService>(); ;
+                .Add<IProductService, ProductService>()
+                .Add<ICartService, CartService>();
 
             await server.Start();
         }
