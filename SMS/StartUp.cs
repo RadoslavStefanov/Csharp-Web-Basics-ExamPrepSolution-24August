@@ -3,6 +3,8 @@
     using BasicWebServer.Server;
     using BasicWebServer.Server.Routing;
     using SMS.Contracts;
+    using SMS.Data;
+    using SMS.Data.Common;
     using SMS.Sevices;
     using System.Threading.Tasks;
 
@@ -15,7 +17,10 @@
                .MapStaticFiles());
 
             server.ServiceCollection
-                .Add<IUserService, UserService>();
+                .Add<IUserService, UserService>()
+                .Add<SMSDbContext>()
+                .Add<IRepository, Repository>()
+                .Add<IProductService, ProductService>(); ;
 
             await server.Start();
         }
