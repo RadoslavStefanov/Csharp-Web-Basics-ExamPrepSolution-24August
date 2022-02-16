@@ -1,6 +1,7 @@
 ﻿using BasicWebServer.Server.Attributes;
 using BasicWebServer.Server.Controllers;
 using BasicWebServer.Server.HTTP;
+using SMS.Contracts;
 using SMS.Models;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,10 @@ namespace SMS.Controllers
 {
     public class UsersController : Controller
     {
-        public UsersController(Request request) 
-            : base(request)
-        {
+        private readonly IUserService userService;
 
-        }
+        public UsersController(Request request,IUserService _userService) : base(request)
+        { userService = _userService; }
 
         public Response Login()
         {
@@ -28,11 +28,25 @@ namespace SMS.Controllers
             return View(new { IsAuthenticated = false });
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public Response Login(LoginViewModel model)
         {
-            
-        }*/
+            Request.Session.Clear();
+            string id = userService.Login(model);
+
+            if (id == null)
+            {
+                return View(new { ErrorMessage = "Incorrect login!" }, "/Error");
+            } 
+
+            SignIn(id);
+
+            CookieCollection cookies = new CookieCollection();
+            cookies.Add(Session.SessionCookieName,
+                Request.Session.Id);
+
+            return Redirect("/");
+        }
 
         public Response Register()
         {
@@ -47,12 +61,14 @@ namespace SMS.Controllers
         [HttpPost]
         public Response Register(RegisterViewModel model)
         {
-            if (User.IsAuthenticated)
+            var (isRegistered,error) = userService.Register(model);
+
+            if (isRegistered)
             {
-                return Redirect("/");
+                return Redirect("/Users/Login");
             }
 
-            return View(new { IsAuthenticated = false });
+            return View(new { ErrorMessage = error }, "/Error");
         }
     }
 }
